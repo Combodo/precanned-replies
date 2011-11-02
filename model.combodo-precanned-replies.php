@@ -320,7 +320,7 @@ class CombodoPrecannedRepliesPlugIn implements iApplicationUIExtension, iApplica
 	
 	protected function IsTargetObject($oObject)
 	{
-		$sAllowedClass = MetaModel::GetModuleSetting('combodo-precanned-replies', 'target_class', 'ResponseTicket');
+		$sAllowedClass = MetaModel::GetModuleSetting('combodo-precanned-replies', 'target_class', 'UserRequest');
 		return ($oObject instanceof $sAllowedClass);
 	}
 	

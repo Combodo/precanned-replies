@@ -55,7 +55,7 @@ SetupWebPage::AddModule(
 		//
 		'settings' => array(
 			// Module specific settings go here, if any
-			'target_class' => 'ReponseTicket',
+			'target_class' => 'UserRequest',
 			'target_caselog' => 'ticket_log',
 			'template_from' => '$this->workgroup_id->email$',
 			'template_from_label' => '$this->agent_id->first_name$ $this->agent_id->name$',
