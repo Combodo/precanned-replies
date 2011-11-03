@@ -53,7 +53,7 @@ class PrecannedReply extends cmdbAbstractObject
 		MetaModel::Init_AddAttribute(new AttributeString("category", array("allowed_values"=>null, "sql"=>"category", "default_value"=>null, "is_null_allowed"=>true, "depends_on"=>array())));
 		MetaModel::Init_AddAttribute(new AttributeString("keywords", array("allowed_values"=>null, "sql"=>"keywords", "default_value"=>null, "is_null_allowed"=>true, "depends_on"=>array())));
 		MetaModel::Init_AddAttribute(new AttributeString("description", array("allowed_values"=>null, "sql"=>"description", "default_value"=>null, "is_null_allowed"=>false, "depends_on"=>array())));
-		MetaModel::Init_AddAttribute(new AttributeString("attachments", array("allowed_values"=>null, "sql"=>"attachments", "default_value"=>null, "is_null_allowed"=>false, "depends_on"=>array())));
+		MetaModel::Init_AddAttribute(new AttributeString("attachments", array("allowed_values"=>null, "sql"=>"attachments", "default_value"=>null, "is_null_allowed"=>true, "depends_on"=>array())));
 		MetaModel::Init_AddAttribute(new AttributeText("body", array("allowed_values"=>null, "sql"=>"body", "default_value"=>null, "is_null_allowed"=>false, "depends_on"=>array())));
 		MetaModel::Init_AddAttribute(new AttributeBlob("file1", array("is_null_allowed"=>true, "depends_on"=>array())));
 		
@@ -65,15 +65,16 @@ class PrecannedReply extends cmdbAbstractObject
 	public function ComputeValues()
 	{
 		$oDoc = $this->Get('file1');
-		if ($oDoc->IsEmpty())
-		{
-			$this->Set('attachments', '');
-		}
-		else
+		if (is_object($oDoc) && !$oDoc->IsEmpty())
 		{
 			$this->Set('attachments', $oDoc->GetFileName());
 		}
-	}}
+		else
+		{
+			$this->Set('attachments', '');
+		}
+	}
+}
 
 /**
  * Link between an answer and the tickets it was used in
@@ -228,7 +229,7 @@ class CombodoPrecannedRepliesPlugIn implements iApplicationUIExtension, iApplica
 				$sFromLabelTemplate = MetaModel::GetModuleSetting('combodo-precanned-replies', 'template_from_label', '$this->agent_id->first_name$ $this->agent_id->name$');
 				$oFromLabelTemplate = new TemplateString($sFromLabelTemplate);
 				$sFromLabel = trim($oFromLabelTemplate->Render(array('this' => $oObject)));
-				echo "<p>From: template: $sFromAddr &lt;$sFromLabel&gt;</p>";
+				//echo "<p>From: template: $sFromAddr &lt;$sFromLabel&gt;</p>";
 				$oEmail->SetRecipientFrom($sFromAddr, $sFromLabel);
 				if ($sRawMessageId != '')
 				{
