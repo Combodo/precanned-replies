@@ -173,6 +173,7 @@ class CombodoPrecannedRepliesPlugIn implements iApplicationUIExtension, iApplica
 				$sLatestEntry = $oCaseLog->GetLatestEntry();
 				$sEmailText = nl2br(htmlentities($sLatestEntry, ENT_QUOTES, 'UTF-8'));
 				$sAddressee = $oObject->Get('caller_email');
+				$sAgentEmail = $oObject->Get('agent_email');
 				$sSubject = 'Re: '.$oObject->Get('title');
 
 				$sBody = $sEmailText."\n<blockquote cite=\"mid:$sRawMessageId\" type=\"cite\"><pre>".htmlentities($sPreviousMessageText, ENT_QUOTES, 'UTF-8')."</pre></blockquote>";
@@ -223,6 +224,7 @@ class CombodoPrecannedRepliesPlugIn implements iApplicationUIExtension, iApplica
 				$oEmail->SetSubject($sSubject);
 				$oEmail->SetBody($sBody);
 				$oEmail->SetRecipientTO($sAddressee);
+				$oEmail->SetRecipientBCC($sAgentEmail);
 				$sFromAddrTemplate = MetaModel::GetModuleSetting('combodo-precanned-replies', 'template_from', '$this->workgroup_id->email$');
 				$oFromAddrTemplate = new TemplateString($sFromAddrTemplate);
 				$sFromAddr = $oFromAddrTemplate->Render(array('this' => $oObject));
