@@ -24,6 +24,18 @@
  */
 
 Dict::Add('EN US', 'English', 'English', array(
-	// Dictionary entries go here
+	'Menu:PrecannedReplies' => 'Precanned replies',
+	'Menu:PrecannedReplies+' => 'Precanned replies',
+
+	'Class:PrecannedReply' => 'Precanned reply',
+	'Class:PrecannedReply+' => 'Precanned reply',
+	'Class:PrecannedReply/Attribute:name' => 'Name',
+	'Class:PrecannedReply/Attribute:name+' => '',
+	'Class:PrecannedReply/Attribute:description' => 'Description',
+	'Class:PrecannedReply/Attribute:description+' => '',
+	'Class:PrecannedReply/Attribute:body' => 'Body',
+	'Class:PrecannedReply/Attribute:body+' => '',
+	'Class:PrecannedReply/Attribute:attachments' => 'Attachments',
+	'Class:PrecannedReply/Attribute:attachments+' => '',
 ));
 ?>

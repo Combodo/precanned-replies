@@ -16,7 +16,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'combodo-precanned-replies',
+	'precanned-replies/1.0.0',
 	array(
 		// Identification
 		//
@@ -26,7 +26,8 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			
+			'itop-attachments/1.0.0',
+			'email-reply/1.0.0',
 		),
 		'mandatory' => false,
 		'visible' => true,
@@ -34,7 +35,7 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
-			'model.combodo-precanned-replies.php'
+			'model.precanned-replies.php'
 		),
 		'webservice' => array(
 			
@@ -57,9 +58,6 @@ SetupWebPage::AddModule(
 			// Module specific settings go here, if any
 			'target_class' => 'UserRequest',
 			'target_caselog' => 'ticket_log',
-			'template_from' => '$this->workgroup_id->email$',
-			'template_from_label' => '$this->agent_id->first_name$ $this->agent_id->name$',
-			'category_mapping' => '$this->service_id_friendlyname$',
 		),
 	)
 );

@@ -19,6 +19,7 @@ try
 	$oPage->no_cache();
 	
 	$sOperation = utils::ReadParam('operation', '');
+	$sLogAttCode = utils::ReadParam('log_attcode', '');
 
 	switch($sOperation)
 	{
@@ -29,18 +30,18 @@ try
 		$oSet = new CMDBObjectSet($oFilter);
 		$oBlock = new DisplayBlock($oFilter, 'search', false);
 		$sHTML .= $oBlock->GetDisplay($oPage, 'precanned-select', array('open' => true, 'currentId' => 'precanned-select'));
-		$sHTML .= "<form id=\"fr_precanned-select\" OnSubmit=\"return PrecannedDoSelect();\">\n";
+		$sHTML .= "<form id=\"fr_precanned-select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
 		$sHTML .= "<div id=\"dr_precanned-select\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
 		$sHTML .= "<div style=\"background: #fff; border:0; text-align:center; vertical-align:middle;\"><p>".Dict::S('UI:Message:EmptyList:UseSearchForm')."</p></div>\n";
 		$sHTML .= "</div>\n";
 		$sHTML .= "<input type=\"button\" id=\"btn_cancel_precanned-select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
-		$sHTML .= "<input type=\"button\" id=\"btn_ok_precanned-select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect();\">";
+		$sHTML .= "<input type=\"button\" id=\"btn_ok_precanned-select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect('$sLogAttCode');\">";
 		$sHTML .= "<input type=\"hidden\" id=\"count_precanned-select\" value=\"0\">";
 		$sHTML .= "</form>\n";
 		$sHTML .= '</div></div>';
 		
 		$oPage->add($sHTML);
-		$oPage->add_ready_script("$('#fs_precanned-select').bind('submit', PrecannedDoSearch);\n");
+		$oPage->add_ready_script("$('#fs_precanned-select').bind('submit', function() {PrecannedDoSearch('$sLogAttCode');} );\n");
 		break;
 		
 		case 'search_precanned':	
@@ -51,24 +52,49 @@ try
 		
 		case 'add_precanned':
 		$aSelected = utils::ReadParam('selected', '');
+
+		$sJson = utils::ReadParam('json', '', false, 'raw_data');
+		if (!empty($sJson))
+		{
+			$oWizardHelper = WizardHelper::FromJSON($sJson);
+			$oObj = $oWizardHelper->GetTargetObject();
+			$aContext = $oObj->ToArgs('this');
+		}
+		else
+		{
+			// Bug!!!!
+			$aContext = array();
+		}
+
 		$aResult = array();
 		foreach($aSelected as $iId)
 		{
 			$oPR = MetaModel::GetObject('PrecannedReply', $iId, false);
 			if ($oPR != null)
 			{
-				$aData = array('id' => $iId, 'text' => $oPR->Get('body'));
-				$oFile = $oPR->Get('file1');
-				if (!$oFile->IsEmpty())
+				// Apply context ($this->...$)
+				$sText = MetaModel::ApplyParams($oPR->Get('body'), $aContext);
+
+				// Search for attachments
+				$oSearch = DBObjectSearch::FromOQL("SELECT Attachment WHERE item_class = :class AND item_id = :item_id");
+				$oSet = new DBObjectSet($oSearch, array(), array('class' => get_class($oPR), 'item_id' => $oPR->GetKey()));
+				$aAtt = array();
+				while ($oAttachment = $oSet->Fetch())
 				{
-					// For now just one file 'file1'
-					$aData['files'] = array($oFile->GetFileName());
+					$oDoc = $oAttachment->Get('contents');
+					$aAtt[] = array(
+						'container_class' => get_class($oAttachment),
+						'container_id' => $oAttachment->GetKey(),
+						'blob_attcode' => 'contents',
+						'file_name' => $oDoc->GetFileName()
+					);
 				}
-				else
-				{
-					$aData['files'] = array();
-				}
-				$aResult[] = $aData;
+
+				$aResult[] = array(
+					'id' => $iId,
+					'text' => $sText,
+					'files' => $aAtt
+				);
 			}
 		}
 		$oPage->add(json_encode($aResult));
