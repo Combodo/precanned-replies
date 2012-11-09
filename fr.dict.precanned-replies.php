@@ -37,7 +37,5 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:PrecannedReply/Attribute:description+' => '',
 	'Class:PrecannedReply/Attribute:body' => 'Texte',
 	'Class:PrecannedReply/Attribute:body+' => '',
-	'Class:PrecannedReply/Attribute:attachments' => 'Pièces jointes',
-	'Class:PrecannedReply/Attribute:attachments+' => '',
 ));
 ?>

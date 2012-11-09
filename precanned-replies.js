@@ -7,7 +7,6 @@ function SelectPrecannedReply(sLogAttCode)
 	{
 		$('body').append('<div id="precanned_dlg"></div>');
 	}
-	// Query the server to get the form to create a target object
 	$('#precanned_button').attr('disabled', 'disabled');
 	$('#v_precanned').html('<img src="../images/indicator.gif" />');
 
@@ -42,15 +41,13 @@ function SelectPrecannedReply(sLogAttCode)
 
 function OnClosePrecannedReply(sLogAttCode)
 {
-	$('#precanned_button').attr('disabled', '');
+	$('#precanned_button').removeAttr('disabled');
 	$('#v_precanned').html('');
 }
 
 function PrecannedDoSelect(sLogAttCode)
 {
-//	$('#precanned_button').attr('disabled', '');
-//	$('#v_precanned').html('');
-	var selected = $('input.selectListprecanned-select_results:checked');
+	var selected = $('input.selectListprecanned_select_results:checked');
 	if (selected.length > 0)
 	{
 		var aSelected = new Array();
@@ -97,20 +94,32 @@ function PrecannedDoSelect(sLogAttCode)
 	}
 	var dlg = $('#precanned_dlg');
 	dlg.dialog('close');
+	dlg.html('');
 }
 
 function PrecannedDoSearch(sLogAttCode)
 {
-	var theMap = {
-			operation: 'search_precanned',
-			log_attcode: sLogAttCode
-		};
+	var theMap = {};
+
+	// Gather the parameters from the search form
+	$('#fs_precanned_select :input').each( function() {
+		if (this.name != '')
+		{
+			var val = $(this).val(); // supports multiselect as well
+			if (val !== null)
+			{
+				theMap[this.name] = val;					
+			}
+		}
+	});
+	theMap['operation'] = 'search_precanned';
+	theMap['log_attcode'] = sLogAttCode;
 	
 	// Run the query and get the result back directly in HTML
 	$.post( AddAppContext(GetAbsoluteUrlModulesRoot()+'precanned-replies/ajax.php'), theMap, 
 		function(data)
 		{
-			var res = $('#dr_precanned-select');
+			var res = $('#dr_precanned_select');
 			res.html(data);
 		},
 		'html'

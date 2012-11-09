@@ -37,7 +37,5 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:PrecannedReply/Attribute:description+' => '',
 	'Class:PrecannedReply/Attribute:body' => 'Body',
 	'Class:PrecannedReply/Attribute:body+' => '',
-	'Class:PrecannedReply/Attribute:attachments' => 'Attachments',
-	'Class:PrecannedReply/Attribute:attachments+' => '',
 ));
 ?>

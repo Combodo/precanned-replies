@@ -29,25 +29,25 @@ try
 		$oFilter = new DBObjectSearch('PrecannedReply');
 		$oSet = new CMDBObjectSet($oFilter);
 		$oBlock = new DisplayBlock($oFilter, 'search', false);
-		$sHTML .= $oBlock->GetDisplay($oPage, 'precanned-select', array('open' => true, 'currentId' => 'precanned-select'));
-		$sHTML .= "<form id=\"fr_precanned-select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
-		$sHTML .= "<div id=\"dr_precanned-select\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
+		$sHTML .= $oBlock->GetDisplay($oPage, 'precanned_select', array('open' => true, 'currentId' => 'precanned_select'));
+		$sHTML .= "<form id=\"fr_precanned_select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
+		$sHTML .= "<div id=\"dr_precanned_select\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
 		$sHTML .= "<div style=\"background: #fff; border:0; text-align:center; vertical-align:middle;\"><p>".Dict::S('UI:Message:EmptyList:UseSearchForm')."</p></div>\n";
 		$sHTML .= "</div>\n";
-		$sHTML .= "<input type=\"button\" id=\"btn_cancel_precanned-select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
-		$sHTML .= "<input type=\"button\" id=\"btn_ok_precanned-select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect('$sLogAttCode');\">";
-		$sHTML .= "<input type=\"hidden\" id=\"count_precanned-select\" value=\"0\">";
+		$sHTML .= "<input type=\"button\" id=\"btn_cancel_precanned_select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
+		$sHTML .= "<input type=\"button\" id=\"btn_ok_precanned_select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect('$sLogAttCode');\">";
+		$sHTML .= "<input type=\"hidden\" id=\"count_precanned_select\" value=\"0\">";
 		$sHTML .= "</form>\n";
 		$sHTML .= '</div></div>';
 		
 		$oPage->add($sHTML);
-		$oPage->add_ready_script("$('#fs_precanned-select').bind('submit', function() {PrecannedDoSearch('$sLogAttCode');} );\n");
+		$oPage->add_ready_script("$('#fs_precanned_select').bind('submit', function() {PrecannedDoSearch('$sLogAttCode'); return false;} );\n");
 		break;
 		
 		case 'search_precanned':	
 		$oFilter = new DBObjectSearch('PrecannedReply');
 		$oBlock = new DisplayBlock($oFilter, 'list', false);
-		$oBlock->Display($oPage, 'precanned-select_results', array('cssCount'=> '#count_precanned-select', 'menu' => false, 'selection_mode' => true, 'selection_type' => 'single')); // Don't display the 'Actions' menu on the results
+		$oBlock->Display($oPage, 'precanned_select_results', array('cssCount'=> '#count_precanned_select', 'menu' => false, 'selection_mode' => true, 'selection_type' => 'single')); // Don't display the 'Actions' menu on the results
 		break;
 		
 		case 'add_precanned':

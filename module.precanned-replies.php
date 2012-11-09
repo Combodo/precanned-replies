@@ -58,7 +58,7 @@ SetupWebPage::AddModule(
 		'settings' => array(
 			// Module specific settings go here, if any
 			'target_class' => 'UserRequest',
-			'target_caselog' => 'ticket_log',
+			'target_caselog' => 'public_log',
 		),
 	)
 );
