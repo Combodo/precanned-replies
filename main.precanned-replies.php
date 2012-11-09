@@ -33,55 +33,6 @@
  * @license     http://www.opensource.org/licenses/gpl-3.0.html LGPL
  */
 
-class PrecannedReply extends cmdbAbstractObject
-{
-	public static function Init()
-	{
-		$aParams = array
-		(
-			"category" => "bizmodel",
-			"key_type" => "autoincrement",
-			"name_attcode" => "name",
-			"state_attcode" => "",
-			"reconc_keys" => array("name"),
-			"db_table" => "precanned_reply",
-			"db_key_field" => "id",
-			"db_finalclass_field" => "",
-		);
-		MetaModel::Init_Params($aParams);
-
-		MetaModel::Init_AddAttribute(new AttributeString("name", array("allowed_values"=>null, "sql"=>"name", "default_value"=>null, "is_null_allowed"=>true, "depends_on"=>array())));
-		MetaModel::Init_AddAttribute(new AttributeString("description", array("allowed_values"=>null, "sql"=>"description", "default_value"=>null, "is_null_allowed"=>false, "depends_on"=>array())));
-		MetaModel::Init_AddAttribute(new AttributeString("attachments", array("allowed_values"=>null, "sql"=>"attachments", "default_value"=>null, "is_null_allowed"=>true, "depends_on"=>array())));
-		MetaModel::Init_AddAttribute(new AttributeText("body", array("allowed_values"=>null, "sql"=>"body", "default_value"=>null, "is_null_allowed"=>false, "depends_on"=>array())));
-		
-		MetaModel::Init_SetZListItems('details', array('name', 'description', 'body'));
-		MetaModel::Init_SetZListItems('standard_search', array('name', 'description'));
-		MetaModel::Init_SetZListItems('list', array('name', 'description', 'attachments'));
-	}
-	
-	public function ComputeValues()
-	{
-		// Build the list of attachments (CSV string)
-		//
-		$oSearch = DBObjectSearch::FromOQL("SELECT Attachment WHERE item_class = :class AND item_id = :item_id");
-		$oSet = new DBObjectSet($oSearch, array(), array('class' => get_class($this), 'item_id' => $this->GetKey()));
-		$aAtt = array();
-		while ($oAttachment = $oSet->Fetch())
-		{
-			$oDoc = $oAttachment->Get('contents');
-			$aAtt[] = $oDoc->GetFileName();
-		}
-		if (count($aAtt) > 0)
-		{			
-			$this->Set('attachments', implode(', ', $aAtt));
-		}
-	}
-}
-
-
-$oToolsMenu = new MenuGroup('DataAdministration', 70 /* fRank */, 'PrecannedReply', UR_ACTION_MODIFY, UR_ALLOWED_YES|UR_ALLOWED_DEPENDS);
-new OQLMenuNode('PrecannedReplies', 'SELECT PrecannedReply', $oToolsMenu->GetIndex(), 99 /* fRank */);
 
 // Declare a class that implements iBackgroundProcess (will be called by the CRON)
 // Extend the class AsyncTask to create a queue of asynchronous tasks (process by the CRON)
@@ -97,8 +48,8 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 			$sAttCode = MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', 'public_log');
 			$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';
 			$oPage->add_linked_script($sModuleUrl.'precanned-replies.js');
-			//@@ Localize
-			$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"Precanned Replies...\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
+			$sButtonLabel = Dict::S('UI:Button-AddReply');
+			$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
 		}
 	}
 

@@ -23,21 +23,21 @@
  * @license     http://www.opensource.org/licenses/gpl-3.0.html LGPL
  */
 
-Dict::Add('EN US', 'English', 'English', array(
-	'Menu:PrecannedReplies' => 'Precanned replies',
-	'Menu:PrecannedReplies+' => 'Precanned replies',
+Dict::Add('FR FR', 'French', 'Français', array(
+	'Menu:PrecannedReplies' => 'Réponses prédéfinies',
+	'Menu:PrecannedReplies+' => 'Réponses prédéfinies',
 
-	'UI:Button-AddReply' => 'Precanned Replies...',
+	'UI:Button-AddReply' => 'Réponse prédéfinie...',
 
-	'Class:PrecannedReply' => 'Precanned reply',
-	'Class:PrecannedReply+' => 'Precanned reply',
-	'Class:PrecannedReply/Attribute:name' => 'Name',
+	'Class:PrecannedReply' => 'Réponse prédéfinie',
+	'Class:PrecannedReply+' => 'Réponse prédéfinie',
+	'Class:PrecannedReply/Attribute:name' => 'Nom',
 	'Class:PrecannedReply/Attribute:name+' => '',
 	'Class:PrecannedReply/Attribute:description' => 'Description',
 	'Class:PrecannedReply/Attribute:description+' => '',
-	'Class:PrecannedReply/Attribute:body' => 'Body',
+	'Class:PrecannedReply/Attribute:body' => 'Texte',
 	'Class:PrecannedReply/Attribute:body+' => '',
-	'Class:PrecannedReply/Attribute:attachments' => 'Attachments',
+	'Class:PrecannedReply/Attribute:attachments' => 'Pièces jointes',
 	'Class:PrecannedReply/Attribute:attachments+' => '',
 ));
 ?>

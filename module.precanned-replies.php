@@ -35,7 +35,8 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
-			'model.precanned-replies.php'
+			'model.precanned-replies.php',
+			'main.precanned-replies.php'
 		),
 		'webservice' => array(
 			
