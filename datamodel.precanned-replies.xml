@@ -87,7 +87,7 @@
   <menus>
     <menu id="PrecannedReplies" xsi:type="OQLMenuNode" _delta="define">
       <rank>100</rank>
-      <parent>DataAdministration</parent>
+      <parent>ServiceManagement</parent>
       <oql>SELECT PrecannedReply</oql>
       <do_search>1</do_search>
     </menu>
