@@ -129,13 +129,5 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 		$sAllowedClass = MetaModel::GetModuleSetting('precanned-replies', 'target_class', 'UserRequest');
 		return ($oObject instanceof $sAllowedClass);
 	}
-	
-	protected static function GetLatestReplica($oTicket)
-	{
-		$sOql = "SELECT EmailReplica WHERE ticket_id = :ticket_id";
-		$oSet = new DBObjectSet(DBObjectSearch::FromOQL($sOql), array('message_date' => false), array('ticket_id' => $oTicket->GetKey()));
-		return $oSet->Fetch();
-	}
 }
 
-?>
