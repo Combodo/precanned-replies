@@ -20,22 +20,22 @@
  * @author      Erwan Taloc <erwan.taloc@combodo.com>
  * @author      Romain Quetiez <romain.quetiez@combodo.com>
  * @author      Denis Flaven <denis.flaven@combodo.com>
+ * @author      Robert Jaehne <robert.jaehne@itomig.de>
  * @license     http://www.opensource.org/licenses/gpl-3.0.html LGPL
  */
 
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-	'Menu:PrecannedReplies' => 'Precanned Replies',
-	'Menu:PrecannedReplies+' => 'Vorgefertigte Antwort-Templates (Precanned Replies)',
+	'Menu:PrecannedReplies' => 'Vorgefertigte Antworten',
+	'Menu:PrecannedReplies+' => 'Vorgefertigte Antworten',
 
-	'UI:Button-AddReply' => 'Precanned Replies...',
+	'UI:Button-AddReply' => 'Vorgefertigte Antworten...',
 
-	'Class:PrecannedReply' => 'Precanned Reply',
-	'Class:PrecannedReply+' => 'Precanned Reply',
+	'Class:PrecannedReply' => 'Vorgefertigte Antwort',
+	'Class:PrecannedReply+' => 'Vorgefertigte Antwort',
 	'Class:PrecannedReply/Attribute:name' => 'Name',
 	'Class:PrecannedReply/Attribute:name+' => '',
 	'Class:PrecannedReply/Attribute:description' => 'Beschreibung',
 	'Class:PrecannedReply/Attribute:description+' => '',
-	'Class:PrecannedReply/Attribute:body' => 'Body',
+	'Class:PrecannedReply/Attribute:body' => 'Text',
 	'Class:PrecannedReply/Attribute:body+' => '',
 ));
-?>
