@@ -28,7 +28,8 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Menu:PrecannedReplies+' => 'Réponses prédéfinies',
 
 	'UI:Button-AddReply' => 'Réponse prédéfinie...',
-
+	'UI:Dlg-PickAReply' => 'Choisissez une Réponse',
+	
 	'Class:PrecannedReply' => 'Réponse prédéfinie',
 	'Class:PrecannedReply+' => 'Réponse prédéfinie',
 	'Class:PrecannedReply/Attribute:name' => 'Nom',

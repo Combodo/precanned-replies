@@ -22,18 +22,10 @@ function SelectPrecannedReply(sLogAttCode)
 		{
 			var dlg = $('#precanned_dlg');
 			dlg.html(data);
-			dlg.dialog({ width: 'auto', height: 'auto', autoOpen: false, modal: true, title: 'Pick a Reply', close: function() {OnClosePrecannedReply(sLogAttCode);} });
+			dlg.dialog({ width: 'auto', height: 'auto', autoOpen: false, modal: true, title: Dict.S('UI:Dlg-PickAReply'), resizeStop: function(event, ui) { PrecannedUpdateSizes(); }, close: function() {OnClosePrecannedReply(sLogAttCode);} });
 			dlg.dialog('open');
-			// Adjust the dialog's size to fit into the screen
-			if (dlg.width() > ($(window).width()-40))
-			{
-				dlg.width($(window).width()-40);
-			}
-			if (dlg.height() > ($(window).height()-70))
-			{
-				dlg.height($(window).height()-70);
-			}
 			PrecannedDoSearch(sLogAttCode);
+			$('#precanned_select').resize(function() { PrecannedUpdateSizes(); });
 		},
 		'html'
 	);
@@ -121,8 +113,45 @@ function PrecannedDoSearch(sLogAttCode)
 		{
 			var res = $('#dr_precanned_select');
 			res.html(data);
+			PrecannedUpdateSizes();
 		},
 		'html'
 	);
 	return false; // Stay on page
+}
+
+function PrecannedUpdateSizes()
+{
+	var dlg = $('#precanned_dlg');
+	// Adjust the dialog's size to fit into the screen
+	
+	var searchForm = $('#precanned_select');
+	var results = $('#fr_precanned_select');
+	var padding_right = 0;
+	if (dlg.css('padding-right'))
+	{
+		padding_right = parseInt(dlg.css('padding-right').replace('px', ''));			
+	}
+	var padding_left = 0;
+	if (dlg.css('padding-left'))
+	{
+		padding_left = parseInt(dlg.css('padding-left').replace('px', ''));			
+	}
+	var padding_top = 0;
+	if (dlg.css('padding-top'))
+	{
+		padding_top = parseInt(dlg.css('padding-top').replace('px', ''));			
+	}
+	var padding_bottom = 0;
+	if (dlg.css('padding-bottom'))
+	{
+		padding_bottom = parseInt(dlg.css('padding-bottom').replace('px', ''));			
+	}
+	width = dlg.innerWidth() - padding_right - padding_left - 22; // 5 (margin-left) + 5 (padding-left) + 5 (padding-right) + 5 (margin-right) + 2 for rounding !
+	height = dlg.innerHeight() - padding_top - padding_bottom -22;
+	wizard = dlg.find('.wizContainer:first');
+	wizard.width(width);
+	wizard.height(height);
+	form_height = searchForm.outerHeight();
+	results.height(height - form_height - 40); // Leave some space for the buttons
 }
