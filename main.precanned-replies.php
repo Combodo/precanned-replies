@@ -49,6 +49,7 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 			$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';
 			$oPage->add_linked_script($sModuleUrl.'precanned-replies.js');
 			$sButtonLabel = Dict::S('UI:Button-AddReply');
+			$oPage->add_dict_entry('UI:Dlg-PickAReply');
 			$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
 		}
 	}
