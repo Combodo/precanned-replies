@@ -127,6 +127,7 @@ function PrecannedUpdateSizes()
 {
 	var dlg = $('#precanned_dlg');
 	// Adjust the dialog's size to fit into the screen
+	dlg.dialog('option', 'position', 'center');
 	
 	var searchForm = $('#precanned_select');
 	var results = $('#fr_precanned_select');
