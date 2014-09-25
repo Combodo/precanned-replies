@@ -23,6 +23,9 @@ function SelectPrecannedReply(sLogAttCode)
 			var dlg = $('#precanned_dlg');
 			dlg.html(data);
 			dlg.dialog({ width: 'auto', height: 'auto', autoOpen: false, modal: true, title: Dict.S('UI:Dlg-PickAReply'), resizeStop: function(event, ui) { PrecannedUpdateSizes(); }, close: function() {OnClosePrecannedReply(sLogAttCode);} });
+			var data_area = $('#dr_precanned_select');
+			data_area.css('max-height', (0.5*$(document).height())+'px'); // Stay within the document's boundaries
+			data_area.css('overflow', 'auto'); // Stay within the document's boundaries
 			dlg.dialog('open');
 			PrecannedDoSearch(sLogAttCode);
 			$('#precanned_select').resize(function() { PrecannedUpdateSizes(); });
@@ -127,6 +130,7 @@ function PrecannedUpdateSizes()
 	
 	var searchForm = $('#precanned_select');
 	var results = $('#fr_precanned_select');
+	
 	var padding_right = 0;
 	if (dlg.css('padding-right'))
 	{
