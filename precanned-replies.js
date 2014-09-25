@@ -154,8 +154,9 @@ function PrecannedUpdateSizes()
 	}
 	width = dlg.innerWidth() - padding_right - padding_left - 22; // 5 (margin-left) + 5 (padding-left) + 5 (padding-right) + 5 (margin-right) + 2 for rounding !
 	height = dlg.innerHeight() - padding_top - padding_bottom -22;
+	height = Math.max(height, 350); // Ensure there is enough space for at least one line...
 	wizard = dlg.find('.wizContainer:first');
-	wizard.width(width);
+	wizard.width(Math.max(wizard.width(), width+22));
 	wizard.height(height);
 	form_height = searchForm.outerHeight();
 	results.height(height - form_height - 40); // Leave some space for the buttons
