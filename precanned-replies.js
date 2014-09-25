@@ -23,6 +23,9 @@ function SelectPrecannedReply(sLogAttCode)
 			var dlg = $('#precanned_dlg');
 			dlg.html(data);
 			dlg.dialog({ width: 'auto', height: 'auto', autoOpen: false, modal: true, title: Dict.S('UI:Dlg-PickAReply'), resizeStop: function(event, ui) { PrecannedUpdateSizes(); }, close: function() {OnClosePrecannedReply(sLogAttCode);} });
+			var data_area = $('#dr_precanned_select');
+			data_area.css('max-height', (0.5*$(document).height())+'px'); // Stay within the document's boundaries
+			data_area.css('overflow', 'auto'); // Stay within the document's boundaries
 			dlg.dialog('open');
 			PrecannedDoSearch(sLogAttCode);
 			$('#precanned_select').resize(function() { PrecannedUpdateSizes(); });
@@ -124,9 +127,11 @@ function PrecannedUpdateSizes()
 {
 	var dlg = $('#precanned_dlg');
 	// Adjust the dialog's size to fit into the screen
+	dlg.dialog('option', 'position', 'center');
 	
 	var searchForm = $('#precanned_select');
 	var results = $('#fr_precanned_select');
+	
 	var padding_right = 0;
 	if (dlg.css('padding-right'))
 	{
@@ -149,8 +154,9 @@ function PrecannedUpdateSizes()
 	}
 	width = dlg.innerWidth() - padding_right - padding_left - 22; // 5 (margin-left) + 5 (padding-left) + 5 (padding-right) + 5 (margin-right) + 2 for rounding !
 	height = dlg.innerHeight() - padding_top - padding_bottom -22;
+	height = Math.max(height, 350); // Ensure there is enough space for at least one line...
 	wizard = dlg.find('.wizContainer:first');
-	wizard.width(width);
+	wizard.width(Math.max(wizard.width(), width+22));
 	wizard.height(height);
 	form_height = searchForm.outerHeight();
 	results.height(height - form_height - 40); // Leave some space for the buttons
