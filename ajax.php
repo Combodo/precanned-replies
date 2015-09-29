@@ -13,7 +13,7 @@ try
 	require_once(APPROOT.'/application/user.preferences.class.inc.php');
 	
 	require_once(APPROOT.'/application/loginwebpage.class.inc.php');
-	LoginWebPage::DoLogin(false /* bMustBeAdmin */, true /* IsAllowedToPortalUsers */); // Check user rights and prompt if needed
+	LoginWebPage::DoLogin(false /* bMustBeAdmin */, false /* IsAllowedToPortalUsers */); // Check user rights and prompt if needed
 	
 	$oPage = new ajax_page("");
 	$oPage->no_cache();
