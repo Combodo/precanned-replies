@@ -44,6 +44,7 @@
           <sql>body</sql>
           <default_value/>
           <is_null_allowed>false</is_null_allowed>
+          <format>html</format>
         </field>
       </fields>
       <methods/>
