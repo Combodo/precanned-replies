@@ -1,4 +1,4 @@
-// (c) Combodo SARL 2011
+// (c) Combodo SARL 2011 - 2016
 
 function SelectPrecannedReply(sLogAttCode)
 {
@@ -42,7 +42,7 @@ function OnClosePrecannedReply(sLogAttCode)
 
 function PrecannedDoSelect(sLogAttCode)
 {
-	var selected = $('input.selectListprecanned_select_results:checked');
+	var selected = $('#datatable_precanned_select_results .listResults input:checked');
 	if (selected.length > 0)
 	{
 		var aSelected = new Array();
