@@ -1,5 +1,5 @@
 <?php
-// Copyright (C) 2018 Combodo SARL
+// Copyright (C) 2010-2018 Combodo SARL
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -17,26 +17,24 @@
 /**
  * Localized data
  *
- * @author      Erwan Taloc <erwan.taloc@combodo.com>
- * @author      Romain Quetiez <romain.quetiez@combodo.com>
- * @author      Denis Flaven <denis.flaven@combodo.com>
+ * @author      Jelle Defoort (https://github.com/jdefoort/iTopExtensions)
  * @license     http://www.opensource.org/licenses/gpl-3.0.html LGPL
  */
 
-Dict::Add('EN US', 'English', 'English', array(
-	'Menu:PrecannedReplies' => 'Precanned replies',
-	'Menu:PrecannedReplies+' => 'Precanned replies',
+Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
+	'Menu:PrecannedReplies' => 'Voorgedefinieerde antwoorden',
+	'Menu:PrecannedReplies+' => 'Voorgedefinieerde antwoorden',
 
-	'UI:Button-AddReply' => 'Precanned Replies...',
-	'UI:Dlg-PickAReply' => 'Pick a Reply',
+	'UI:Button-AddReply' => 'Voorgedefinieerde antwoorden...',
+	'UI:Dlg-PickAReply' => 'Selecteer een antwoord',
 	
-	'Class:PrecannedReply' => 'Precanned reply',
-	'Class:PrecannedReply+' => 'Precanned reply',
-	'Class:PrecannedReply/Attribute:name' => 'Name',
+	'Class:PrecannedReply' => 'Voorgedefinieerd antwoord',
+	'Class:PrecannedReply+' => 'Voorgedefinieerd antwoord',
+	'Class:PrecannedReply/Attribute:name' => 'Naam',
 	'Class:PrecannedReply/Attribute:name+' => '',
-	'Class:PrecannedReply/Attribute:description' => 'Description',
+	'Class:PrecannedReply/Attribute:description' => 'Onderwerp',
 	'Class:PrecannedReply/Attribute:description+' => '',
-	'Class:PrecannedReply/Attribute:body' => 'Body',
+	'Class:PrecannedReply/Attribute:body' => 'Omschrijving',
 	'Class:PrecannedReply/Attribute:body+' => '',
 ));
 
