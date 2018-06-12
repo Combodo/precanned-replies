@@ -42,7 +42,7 @@ function OnClosePrecannedReply(sLogAttCode)
 
 function PrecannedDoSelect(sLogAttCode)
 {
-	var selected = $('#datatable_precanned_select_results .listResults input:checked');
+	var selected = $('#datatable_search_form_result_precanned_select .listResults input:checked');
 	if (selected.length > 0)
 	{
 		var aSelected = new Array();
@@ -130,7 +130,7 @@ function PrecannedUpdateSizes()
 	dlg.dialog('option', 'position', 'center');
 	
 	var searchForm = $('#precanned_select');
-	var results = $('#fr_precanned_select');
+	var results = $('#dr_precanned_select');
 	
 	var padding_right = 0;
 	if (dlg.css('padding-right'))
@@ -153,10 +153,10 @@ function PrecannedUpdateSizes()
 		padding_bottom = parseInt(dlg.css('padding-bottom').replace('px', ''));			
 	}
 	width = dlg.innerWidth() - padding_right - padding_left - 22; // 5 (margin-left) + 5 (padding-left) + 5 (padding-right) + 5 (margin-right) + 2 for rounding !
-	height = dlg.innerHeight() - padding_top - padding_bottom -22;
+	height = dlg.innerHeight() - padding_top - padding_bottom - 22;
 	height = Math.max(height, 350); // Ensure there is enough space for at least one line...
 	wizard = dlg.find('.wizContainer:first');
-	wizard.width(Math.max(wizard.width(), width+22));
+	wizard.width(width);
 	wizard.height(height);
 	form_height = searchForm.outerHeight();
 	results.height(height - form_height - 40); // Leave some space for the buttons

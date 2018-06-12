@@ -29,9 +29,9 @@ try
 		$oFilter = new DBObjectSearch('PrecannedReply');
 		$oSet = new CMDBObjectSet($oFilter);
 		$oBlock = new DisplayBlock($oFilter, 'search', false);
-		$sHTML .= $oBlock->GetDisplay($oPage, 'precanned_select', array('open' => true, 'currentId' => 'precanned_select'));
+		$sHTML .= $oBlock->GetDisplay($oPage, 'precanned_select', array('open' => true, 'currentId' => 'precanned_select', 'table_inner_id' => 'datatable_search_form_result_precanned_select'));
 		$sHTML .= "<form id=\"fr_precanned_select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
-		$sHTML .= "<div id=\"dr_precanned_select\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
+		$sHTML .= "<div id=\"dr_precanned_select\" class=\"sf_results_area\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
 		$sHTML .= "<div style=\"background: #fff; border:0; text-align:center; vertical-align:middle;\"><p>".Dict::S('UI:Message:EmptyList:UseSearchForm')."</p></div>\n";
 		$sHTML .= "</div>\n";
 		$sHTML .= "<input type=\"button\" id=\"btn_cancel_precanned_select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
@@ -47,7 +47,7 @@ try
 		case 'search_precanned':	
 		$oFilter = new DBObjectSearch('PrecannedReply');
 		$oBlock = new DisplayBlock($oFilter, 'list', false);
-		$oBlock->Display($oPage, 'precanned_select_results', array('cssCount'=> '#count_precanned_select', 'menu' => false, 'selection_mode' => true, 'selection_type' => 'single')); // Don't display the 'Actions' menu on the results
+		$oBlock->Display($oPage, 'search_form_result_precanned_select', array('cssCount'=> '#count_precanned_select', 'menu' => false, 'selection_mode' => true, 'selection_type' => 'single')); // Don't display the 'Actions' menu on the results
 		break;
 		
 		case 'add_precanned':
