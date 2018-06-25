@@ -154,7 +154,7 @@ function PrecannedUpdateSizes()
 	}
 	width = dlg.innerWidth() - padding_right - padding_left - 22; // 5 (margin-left) + 5 (padding-left) + 5 (padding-right) + 5 (margin-right) + 2 for rounding !
 	height = dlg.innerHeight() - padding_top - padding_bottom - 22;
-	height = Math.max(height, 350); // Ensure there is enough space for at least one line...
+	height = Math.max(height, 450); // Ensure there is enough space for at least one line and the search criteria dropdown...
 	wizard = dlg.find('.wizContainer:first');
 	wizard.width(width);
 	wizard.height(height);
