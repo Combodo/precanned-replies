@@ -127,7 +127,7 @@ function PrecannedUpdateSizes()
 {
 	var dlg = $('#precanned_dlg');
 	// Adjust the dialog's size to fit into the screen
-	dlg.dialog('option', 'position', 'center');
+	dlg.dialog('option', 'position', {my: 'center', at: 'center', of: window});
 	
 	var searchForm = $('#precanned_select');
 	var results = $('#dr_precanned_select');
@@ -160,4 +160,6 @@ function PrecannedUpdateSizes()
 	wizard.height(height);
 	form_height = searchForm.outerHeight();
 	results.height(height - form_height - 40); // Leave some space for the buttons
+
+    dlg.dialog('option', 'position', {my: 'center', at: 'center', of: window});
 }
