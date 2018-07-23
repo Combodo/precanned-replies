@@ -2,12 +2,12 @@
 
 function SelectPrecannedReply(sLogAttCode)
 {
-	if ($('#precanned_button').attr('disabled')) return; // Disabled, do nothing
+	if ($('#precanned_button').prop('disabled')) return; // Disabled, do nothing
 	if ($('#precanned_dlg').length == 0)
 	{
 		$('body').append('<div id="precanned_dlg"></div>');
 	}
-	$('#precanned_button').attr('disabled', 'disabled');
+	$('#precanned_button').prop('disabled', true);
 	$('#v_precanned').html('<img src="../images/indicator.gif" />');
 
 	oWizardHelper.UpdateWizard();
@@ -36,7 +36,7 @@ function SelectPrecannedReply(sLogAttCode)
 
 function OnClosePrecannedReply(sLogAttCode)
 {
-	$('#precanned_button').removeAttr('disabled');
+	$('#precanned_button').prop('disabled', false);
 	$('#v_precanned').html('');
 }
 
@@ -80,7 +80,7 @@ function PrecannedDoSelect(sLogAttCode)
 					])
 					index++;
 				}
-				$('#emry_enabled_'+sLogAttCode).attr('checked', true);
+				$('#emry_enabled_'+sLogAttCode).prop('checked', true);
 			},
 			'json'
 		);
