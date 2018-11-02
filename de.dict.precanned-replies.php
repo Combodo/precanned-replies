@@ -13,7 +13,6 @@
 //   You should have received a copy of the GNU General Public License
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 /**
  * Localized data
  *
@@ -23,7 +22,6 @@
  * @author      Robert Jaehne <robert.jaehne@itomig.de>
  * @license     http://www.opensource.org/licenses/gpl-3.0.html LGPL
  */
-
 Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Menu:PrecannedReplies' => 'Vorgefertigte Antworten',
 	'Menu:PrecannedReplies+' => 'Vorgefertigte Antworten',
@@ -31,7 +29,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'UI:Button-AddReply' => 'Vorgefertigte Antworten...',
 	'UI:Dlg-PickAReply' => 'Wählen Sie eine Antwort',
 	
-
 	'Class:PrecannedReply' => 'Vorgefertigte Antwort',
 	'Class:PrecannedReply+' => 'Vorgefertigte Antwort',
 	'Class:PrecannedReply/Attribute:name' => 'Name',
@@ -41,3 +38,4 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Class:PrecannedReply/Attribute:body' => 'Text',
 	'Class:PrecannedReply/Attribute:body+' => '',
 ));
+
