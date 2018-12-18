@@ -21,20 +21,20 @@
  * along with iTop. If not, see <http://www.gnu.org/licenses/>
  */
 
-Dict::Add('EN US', 'English', 'English', array(
-	'Menu:PrecannedReplies' => 'Precanned replies',
-	'Menu:PrecannedReplies+' => 'Precanned replies',
+Dict::Add('DA DA', 'Danish', 'Dansk', array(
+	'Menu:PrecannedReplies' => 'Precanned replies~~',
+	'Menu:PrecannedReplies+' => 'Precanned replies~~',
 
-	'UI:Button-AddReply' => 'Precanned Replies...',
-	'UI:Dlg-PickAReply' => 'Pick a Reply',
+	'UI:Button-AddReply' => 'Precanned Replies...~~',
+	'UI:Dlg-PickAReply' => 'Pick a Reply~~',
 	
-	'Class:PrecannedReply' => 'Precanned reply',
-	'Class:PrecannedReply+' => 'Precanned reply',
-	'Class:PrecannedReply/Attribute:name' => 'Name',
-	'Class:PrecannedReply/Attribute:name+' => '',
-	'Class:PrecannedReply/Attribute:description' => 'Description',
-	'Class:PrecannedReply/Attribute:description+' => '',
-	'Class:PrecannedReply/Attribute:body' => 'Body',
-	'Class:PrecannedReply/Attribute:body+' => '',
+	'Class:PrecannedReply' => 'Precanned reply~~',
+	'Class:PrecannedReply+' => 'Precanned reply~~',
+	'Class:PrecannedReply/Attribute:name' => 'Name~~',
+	'Class:PrecannedReply/Attribute:name+' => '~~',
+	'Class:PrecannedReply/Attribute:description' => 'Description~~',
+	'Class:PrecannedReply/Attribute:description+' => '~~',
+	'Class:PrecannedReply/Attribute:body' => 'Body~~',
+	'Class:PrecannedReply/Attribute:body+' => '~~',
 ));
 
