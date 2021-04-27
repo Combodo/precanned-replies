@@ -41,16 +41,38 @@
 
 class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObjectExtension
 {
+	const XML_LEGACY_VERSION = '1.7';
+
+	/**
+	 * Compare static::XML_LEGACY_VERSION with ITOP_DESIGN_LATEST_VERSION and returns true if the later is <= to the former.
+	 * If static::XML_LEGACY_VERSION, return false
+	 *
+	 * @return bool
+	 *
+	 * @since 1.2.0
+	 */
+	public static function UseLegacy(){
+		return static::XML_LEGACY_VERSION !== '' ? version_compare(ITOP_DESIGN_LATEST_VERSION, static::XML_LEGACY_VERSION, '<=') : false;
+	}
+
 	public function OnDisplayProperties($oObject, WebPage $oPage, $bEditMode = false)
 	{
 		if ($bEditMode && self::IsTargetObject($oObject) && !$oObject->IsNew())
 		{
 			$sAttCode = MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', 'public_log');
 			$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';
+			$bIsLegacy = static::UseLegacy();
+			$sIsLegacy = $bIsLegacy === true ? 'true' : 'false';
+			$oPage->add_ready_script("IsPrecannedRepliesLegacy = $sIsLegacy;");
 			$oPage->add_linked_script($sModuleUrl.'precanned-replies.js');
 			$sButtonLabel = Dict::S('UI:Button-AddReply');
 			$oPage->add_dict_entry('UI:Dlg-PickAReply');
-			$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
+			if($bIsLegacy){
+				$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
+			}
+			else{
+				$oPage->add_ready_script("$('[data-role=\"ibo-caselog-entry-form\"][data-attribute-code=\"$sAttCode\"] [data-role=\"ibo-caselog-entry-form--action-buttons--extra-actions\"]').append('<div id=\"precanned_replies\" style=\"display:inline-block;\"><button type=\"button\" class=\"emry-button ibo-button ibo-is-regular ibo-is-neutral\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"><span class=\"ibo-button--icon fas fa-file-invoice\"></span><span class=\"ibo-button--label\">Templates</span></button><span id=\"v_precanned\"></span></div>');");
+			}
 		}
 	}
 

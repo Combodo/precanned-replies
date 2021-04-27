@@ -1,7 +1,6 @@
 <?php
 require_once('../../approot.inc.php');
 require_once(APPROOT.'/application/application.inc.php');
-require_once(APPROOT.'/application/webpage.class.inc.php');
 require_once(APPROOT.'/application/ajaxwebpage.class.inc.php');
 require_once(APPROOT.'/application/wizardhelper.class.inc.php');
 require_once(APPROOT.'/application/ui.linkswidget.class.inc.php');
@@ -24,18 +23,27 @@ try
 	switch($sOperation)
 	{
 		case 'select_precanned':
-		$sHTML = '<div class="wizContainer" style="vertical-align:top;"><div>';
 
 		$oFilter = new DBObjectSearch('PrecannedReply');
 		$oSet = new CMDBObjectSet($oFilter);
 		$oBlock = new DisplayBlock($oFilter, 'search', false);
-		$sHTML .= $oBlock->GetDisplay($oPage, 'precanned_select', array('open' => true, 'currentId' => 'precanned_select', 'table_inner_id' => 'datatable_search_form_result_precanned_select'));
-		$sHTML .= "<form id=\"fr_precanned_select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
-		$sHTML .= "<div id=\"dr_precanned_select\" class=\"sf_results_area\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
-		$sHTML .= "<div style=\"background: #fff; border:0; text-align:center; vertical-align:middle;\"><p>".Dict::S('UI:Message:EmptyList:UseSearchForm')."</p></div>\n";
-		$sHTML .= "</div>\n";
-		$sHTML .= "<input type=\"button\" id=\"btn_cancel_precanned_select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
-		$sHTML .= "<input type=\"button\" id=\"btn_ok_precanned_select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect('$sLogAttCode');\">";
+		if(PrecannedRepliesPlugIn::UseLegacy()){
+			$sHTML = '<div class="wizContainer" style="vertical-align:top;"><div>';
+			$sHTML .= $oBlock->GetDisplay($oPage, 'precanned_select', array('open' => true, 'currentId' => 'precanned_select', 'table_inner_id' => 'datatable_search_form_result_precanned_select'));
+			$sHTML .= "<form id=\"fr_precanned_select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
+			$sHTML .= "<div id=\"dr_precanned_select\" class=\"sf_results_area\" style=\"vertical-align:top;background: #fff;height:100%;overflow:auto;padding:0;border:0;\">\n";
+			$sHTML .= "<div style=\"background: #fff; border:0; text-align:center; vertical-align:middle;\"><p>".Dict::S('UI:Message:EmptyList:UseSearchForm')."</p></div>\n";
+			$sHTML .= "</div>\n";
+		}
+		else{
+			$oPage->add('<div class="wizContainer" style="vertical-align:top;"><div>');
+			$oBlock->Display($oPage, 'precanned_select', array('open' => true, 'currentId' => 'precanned_select', 'table_inner_id' => 'datatable_search_form_result_precanned_select',				'menu' => false,
+			 'selection_mode' => true,
+			 'selection_type' => 'single',));
+			$sHTML = "<form id=\"fr_precanned_select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
+		}
+		$sHTML .= "<input type=\"button\" class=\"ibo-button ibo-is-alternative ibo-is-neutral\" id=\"btn_cancel_precanned_select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
+		$sHTML .= "<input type=\"button\" class=\"ibo-button ibo-is-regular ibo-is-primary\" id=\"btn_ok_precanned_select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect('$sLogAttCode');\">";
 		$sHTML .= "<input type=\"hidden\" id=\"count_precanned_select\" value=\"0\">";
 		$sHTML .= "</form>\n";
 		$sHTML .= '</div></div>';

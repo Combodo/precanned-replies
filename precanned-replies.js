@@ -27,7 +27,9 @@ function SelectPrecannedReply(sLogAttCode)
 			data_area.css('max-height', (0.5*$(document).height())+'px'); // Stay within the document's boundaries
 			data_area.css('overflow', 'auto'); // Stay within the document's boundaries
 			dlg.dialog('open');
-			PrecannedDoSearch(sLogAttCode);
+			if(IsPrecannedRepliesLegacy){
+				PrecannedDoSearch(sLogAttCode);				
+			}
 			$('#precanned_select').resize(function() { PrecannedUpdateSizes(); });
 		},
 		'html'
@@ -42,7 +44,11 @@ function OnClosePrecannedReply(sLogAttCode)
 
 function PrecannedDoSelect(sLogAttCode)
 {
-	var selected = $('#datatable_search_form_result_precanned_select .listResults input:checked');
+	var selected = $('#datatable_search_form_result_precanned_select input:checked');
+	if(IsPrecannedRepliesLegacy){
+		selected = $('#datatable_search_form_result_precanned_select .listResults input:checked');
+	}
+	
 	if (selected.length > 0)
 	{
 		var aSelected = new Array();
@@ -62,12 +68,19 @@ function PrecannedDoSelect(sLogAttCode)
 			{
 				var sText = aJson[0].text;
 				var iPrecannedId = aJson[0].id;
-				var sPrevVal = $('#2_'+sLogAttCode).val();
+				var aLogDiv = '';
+				if(IsPrecannedRepliesLegacy){
+					aLogDiv = $('#2_'+sLogAttCode);
+				}
+				else{
+					aLogDiv = $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] [data-role="ibo-caselog-entry-form--text-input"] textarea');
+				}
+				var sPrevVal = aLogDiv.val();
 				if (sPrevVal != '')
 				{
 					sPrevVal = '\n'+sPrevVal;
 				}
-				$('#2_'+sLogAttCode).val(sText+sPrevVal);
+				aLogDiv.val(sText+sPrevVal);
 				var aFiles = aJson[0].files;
 				var index = 0;
 				while(index < aFiles.length)
