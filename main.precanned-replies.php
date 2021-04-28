@@ -71,7 +71,14 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 				$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
 			}
 			else{
-				$oPage->add_ready_script("$('[data-role=\"ibo-caselog-entry-form\"][data-attribute-code=\"$sAttCode\"] [data-role=\"ibo-caselog-entry-form--action-buttons--extra-actions\"]').append('<div id=\"precanned_replies\" style=\"display:inline-block;\"><button type=\"button\" class=\"emry-button ibo-button ibo-is-regular ibo-is-neutral\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"><span class=\"ibo-button--icon fas fa-file-invoice\"></span><span class=\"ibo-button--label\">Templates</span></button><span id=\"v_precanned\"></span></div>');");
+				$sButtonLTooltip = $sButtonLabel;
+				$sButtonLabel = Dict::S('UI:Button-AddReply:Short');
+				$oPage->add_ready_script(
+					<<<JS
+$('[data-role=\"ibo-caselog-entry-form\"][data-attribute-code=\"$sAttCode\"] [data-role=\"ibo-caselog-entry-form--action-buttons--extra-actions\"]').append('<div id=\"precanned_replies\" style=\"display:inline-block;\"><button type=\"button\" class=\"emry-button ibo-button ibo-is-regular ibo-is-neutral\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\" data-tooltip-content=\"$sButtonLTooltip\"><span class=\"ibo-button--icon fas fa-file-invoice\"></span><span class=\"ibo-button--label\">$sButtonLabel</span></button><span id=\"v_precanned\"></span></div>');
+CombodoTooltip.InitTooltipFromMarkup($('#precanned_button'), true);
+JS
+				);
 			}
 		}
 	}

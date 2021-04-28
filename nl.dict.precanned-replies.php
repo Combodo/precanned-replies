@@ -24,6 +24,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 	'Menu:PrecannedReplies+' => 'Voorgedefinieerde antwoorden',
 
 	'UI:Button-AddReply' => 'Voorgedefinieerde antwoorden...',
+	'UI:Button-AddReply:Short' => 'Templates~~',
 	'UI:Dlg-PickAReply' => 'Selecteer een antwoord',
 	
 	'Class:PrecannedReply' => 'Voorgedefinieerd antwoord',

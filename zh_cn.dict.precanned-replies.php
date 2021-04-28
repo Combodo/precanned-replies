@@ -25,6 +25,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 	'Menu:PrecannedReplies+' => 'Precanned replies~~',
 
 	'UI:Button-AddReply' => 'Precanned Replies...~~',
+	'UI:Button-AddReply:Short' => 'Templates~~',
 	'UI:Dlg-PickAReply' => 'Pick a Reply~~',
 	
 	'Class:PrecannedReply' => 'Precanned reply~~',

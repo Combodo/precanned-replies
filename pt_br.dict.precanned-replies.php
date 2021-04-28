@@ -25,6 +25,7 @@ Dict::Add('PT BR', 'Brazilian', 'Brazilian', array(
 	'Menu:PrecannedReplies+' => 'Precanned replies~~',
 
 	'UI:Button-AddReply' => 'Precanned Replies...~~',
+	'UI:Button-AddReply:Short' => 'Templates~~',
 	'UI:Dlg-PickAReply' => 'Pick a Reply~~',
 	
 	'Class:PrecannedReply' => 'Precanned reply~~',

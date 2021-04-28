@@ -28,6 +28,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'UI:Dlg-PickAReply' => 'Pick a Reply~~',
 	
 	'Class:PrecannedReply' => 'Precanned reply~~',
+	'UI:Button-AddReply:Short' => 'Templates~~',
 	'Class:PrecannedReply+' => 'Precanned reply~~',
 	'Class:PrecannedReply/Attribute:name' => 'Name~~',
 	'Class:PrecannedReply/Attribute:name+' => '~~',

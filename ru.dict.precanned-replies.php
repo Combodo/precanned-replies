@@ -12,6 +12,7 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
 	'Menu:PrecannedReplies+' => 'Готовые ответы',
 
 	'UI:Button-AddReply' => 'Готовые ответы...',
+	'UI:Button-AddReply:Short' => 'Templates~~',
 	'UI:Dlg-PickAReply' => 'Выберите ответ',
 	
 	'Class:PrecannedReply' => 'Готовый ответ',
