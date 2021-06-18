@@ -68,19 +68,16 @@ function PrecannedDoSelect(sLogAttCode)
 			{
 				var sText = aJson[0].text;
 				var iPrecannedId = aJson[0].id;
-				var aLogDiv = '';
+				
 				if(IsPrecannedRepliesLegacy){
-					aLogDiv = $('#2_'+sLogAttCode);
+					var sInstanceCode = $('#2_'+sLogAttCode);
 				}
 				else{
-					aLogDiv = $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] [data-role="ibo-caselog-entry-form--text-input"] textarea');
+					var sInstanceCode =  $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] textarea').attr('id');
 				}
-				var sPrevVal = aLogDiv.val();
-				if (sPrevVal != '')
-				{
-					sPrevVal = '\n'+sPrevVal;
-				}
-				aLogDiv.val(sText+sPrevVal);
+				
+				CKEDITOR.instances[sInstanceCode].insertHtml(sText);
+				
 				var aFiles = aJson[0].files;
 				var index = 0;
 				while(index < aFiles.length)
