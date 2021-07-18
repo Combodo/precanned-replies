@@ -70,7 +70,7 @@ function PrecannedDoSelect(sLogAttCode)
 				var iPrecannedId = aJson[0].id;
 				
 				if(IsPrecannedRepliesLegacy){
-					var sInstanceCode = $('#2_'+sLogAttCode);
+					var sInstanceCode = $('#2_'+sLogAttCode).attr('id');
 				}
 				else{
 					var sInstanceCode =  $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] textarea').attr('id');
