@@ -1,5 +1,13 @@
 // (c) Combodo SARL 2011 - 2016
 
+function GetWizardHelperJsonPrecannedReply() {
+	let aReturn = {};
+	if(typeof oWizardHelper != 'undefined') {
+		oWizardHelper.UpdateWizard();
+		aReturn = oWizardHelper.ToJSON();
+	}
+	return aReturn;
+}
 function SelectPrecannedReply(sLogAttCode)
 {
 	if ($('#precanned_button').prop('disabled')) return; // Disabled, do nothing
@@ -10,11 +18,18 @@ function SelectPrecannedReply(sLogAttCode)
 	$('#precanned_button').prop('disabled', true);
 	$('#v_precanned').html('<img src="../images/indicator.gif" />');
 
-	oWizardHelper.UpdateWizard();
-	var theMap = { 'json': oWizardHelper.ToJSON(),
-			   operation: 'select_precanned',
-			   log_attcode: sLogAttCode
-			 };
+	var $aJsonData = {'json' : GetWizardHelperJsonPrecannedReply()};
+	if($aJsonData['json'] === {}) {
+		$aJsonData = {
+			'object_class': $('[data-role="ibo-object-details"]').attr('data-object-class'),
+			'object_id': $('[data-role="ibo-object-details"]').attr('data-object-id')
+		}
+	}
+	
+	var theMap = $.extend($aJsonData, {
+		   operation: 'select_precanned',
+		   log_attcode: sLogAttCode
+	 });
 	
 	// Run the query and get the result back directly in HTML
 	$.post( AddAppContext(GetAbsoluteUrlModulesRoot()+'precanned-replies/ajax.php'), theMap, 
@@ -55,12 +70,19 @@ function PrecannedDoSelect(sLogAttCode)
 		var index = 0;
 		selected.each( function () { aSelected[index++] = this.value; });
 
-		oWizardHelper.UpdateWizard();
-		var theMap = { 'json': oWizardHelper.ToJSON(),
+		var $aJsonData = {'json' : GetWizardHelperJsonPrecannedReply()};
+		if($aJsonData['json'] === {}) {
+			$aJsonData = {
+				'object_class': $('[data-role="ibo-object-details"]').attr('data-object-class'),
+				'object_id': $('[data-role="ibo-object-details"]').attr('data-object-id')
+			}
+		}
+
+		var theMap = $.extend($aJsonData, {
 			operation: 'add_precanned',
 			selected: aSelected,
 			log_attcode: sLogAttCode
-		 };
+		 });
 		
 		// Run the query and get the result back directly in HTML
 		$.post( AddAppContext(GetAbsoluteUrlModulesRoot()+'precanned-replies/ajax.php'), theMap, 

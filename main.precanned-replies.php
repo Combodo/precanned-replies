@@ -57,7 +57,9 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 
 	public function OnDisplayProperties($oObject, WebPage $oPage, $bEditMode = false)
 	{
-		if ($bEditMode && self::IsTargetObject($oObject) && !$oObject->IsNew())
+		$bIsLegacy = static::UseLegacy();
+
+		if (($bEditMode || !$bIsLegacy) && self::IsTargetObject($oObject) && !$oObject->IsNew())
 		{
 			$sAttCode = MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', 'public_log');
 			$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';

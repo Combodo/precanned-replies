@@ -62,14 +62,18 @@ try
 		$aSelected = utils::ReadParam('selected', '');
 
 		$sJson = utils::ReadParam('json', '', false, 'raw_data');
-		if (!empty($sJson))
-		{
+		$sObjClass = utils::ReadParam('object_class', '', false, 'class');
+		$sObjId = utils::ReadParam('object_id', 0, false, 'integer');
+		if (!empty($sJson)) {
 			$oWizardHelper = WizardHelper::FromJSON($sJson);
 			$oObj = $oWizardHelper->GetTargetObject();
 			$aContext = $oObj->ToArgs('this');
 		}
-		else
-		{
+		else if(!PrecannedRepliesPlugIn::UseLegacy() && $sObjClass != '' && $sObjId > 0) {
+			$oObj = MetaModel::GetObject($sObjClass, $sObjId);
+			$aContext = $oObj->ToArgs('this');
+		}
+		else {
 			// Bug!!!!
 			$aContext = array();
 		}
