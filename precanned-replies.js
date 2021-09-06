@@ -19,7 +19,7 @@ function SelectPrecannedReply(sLogAttCode)
 	$('#v_precanned').html('<img src="../images/indicator.gif" />');
 
 	var $aJsonData = {'json' : GetWizardHelperJsonPrecannedReply()};
-	if($aJsonData['json'] === {}) {
+	if(Object.keys($aJsonData['json']).length === 0) {
 		$aJsonData = {
 			'object_class': $('[data-role="ibo-object-details"]').attr('data-object-class'),
 			'object_id': $('[data-role="ibo-object-details"]').attr('data-object-id')
@@ -71,7 +71,7 @@ function PrecannedDoSelect(sLogAttCode)
 		selected.each( function () { aSelected[index++] = this.value; });
 
 		var $aJsonData = {'json' : GetWizardHelperJsonPrecannedReply()};
-		if($aJsonData['json'] === {}) {
+		if(Object.keys($aJsonData['json']).length === 0) {
 			$aJsonData = {
 				'object_class': $('[data-role="ibo-object-details"]').attr('data-object-class'),
 				'object_id': $('[data-role="ibo-object-details"]').attr('data-object-id')
