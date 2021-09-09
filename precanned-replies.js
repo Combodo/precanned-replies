@@ -1,7 +1,7 @@
 // (c) Combodo SARL 2011 - 2016
 
 function GetWizardHelperJsonPrecannedReply() {
-	let aReturn = {};
+	var aReturn = {};
 	if(typeof oWizardHelper != 'undefined') {
 		oWizardHelper.UpdateWizard();
 		aReturn = oWizardHelper.ToJSON();
