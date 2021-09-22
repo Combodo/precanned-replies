@@ -37,15 +37,38 @@ function SelectPrecannedReply(sLogAttCode)
 		{
 			var dlg = $('#precanned_dlg');
 			dlg.html(data);
-			dlg.dialog({ width: 'auto', height: 'auto', autoOpen: false, modal: true, title: Dict.S('UI:Dlg-PickAReply'), resizeStop: function(event, ui) { PrecannedUpdateSizes(); }, close: function() {OnClosePrecannedReply(sLogAttCode);} });
+			dlg.dialog({ 
+				width: $(window).width()*0.8,
+				height: $(window).height()*0.8,
+				autoOpen: false,
+				modal: true,
+				title: Dict.S('UI:Dlg-PickAReply'),
+				close: function() {OnClosePrecannedReply(sLogAttCode);},
+				buttons: [
+					{
+						text: Dict.S('UI:Button:Cancel'),
+						class: "ibo-is-alternative ibo-is-neutral",
+						click: function() {
+							$(this).dialog('close');
+						}
+					},
+					{
+						text:  Dict.S('UI:Button:Add'),
+						class: "ibo-is-regular ibo-is-primary",
+						id: "btn_ok_{{ oUIBlock.sLinkedSetId }}",
+						click: function() {
+							PrecannedDoSelect(sLogAttCode);
+						}
+					},
+				],}
+			);
 			var data_area = $('#dr_precanned_select');
-			data_area.css('max-height', (0.5*$(document).height())+'px'); // Stay within the document's boundaries
-			data_area.css('overflow', 'auto'); // Stay within the document's boundaries
+			//data_area.css('max-height', (0.5*$(document).height())+'px'); // Stay within the document's boundaries
+			//data_area.css('overflow', 'auto'); // Stay within the document's boundaries
 			dlg.dialog('open');
 			if(IsPrecannedRepliesLegacy){
 				PrecannedDoSearch(sLogAttCode);				
 			}
-			$('#precanned_select').resize(function() { PrecannedUpdateSizes(); });
 		},
 		'html'
 	);
@@ -148,50 +171,9 @@ function PrecannedDoSearch(sLogAttCode)
 		{
 			var res = $('#dr_precanned_select');
 			res.html(data);
-			PrecannedUpdateSizes();
 		},
 		'html'
 	);
 	return false; // Stay on page
 }
 
-function PrecannedUpdateSizes()
-{
-	var dlg = $('#precanned_dlg');
-	// Adjust the dialog's size to fit into the screen
-	dlg.dialog('option', 'position', {my: 'center', at: 'center', of: window});
-	
-	var searchForm = $('#precanned_select');
-	var results = $('#dr_precanned_select');
-	
-	var padding_right = 0;
-	if (dlg.css('padding-right'))
-	{
-		padding_right = parseInt(dlg.css('padding-right').replace('px', ''));			
-	}
-	var padding_left = 0;
-	if (dlg.css('padding-left'))
-	{
-		padding_left = parseInt(dlg.css('padding-left').replace('px', ''));			
-	}
-	var padding_top = 0;
-	if (dlg.css('padding-top'))
-	{
-		padding_top = parseInt(dlg.css('padding-top').replace('px', ''));			
-	}
-	var padding_bottom = 0;
-	if (dlg.css('padding-bottom'))
-	{
-		padding_bottom = parseInt(dlg.css('padding-bottom').replace('px', ''));			
-	}
-	width = dlg.innerWidth() - padding_right - padding_left - 22; // 5 (margin-left) + 5 (padding-left) + 5 (padding-right) + 5 (margin-right) + 2 for rounding !
-	height = dlg.innerHeight() - padding_top - padding_bottom - 22;
-	height = Math.max(height, 450); // Ensure there is enough space for at least one line and the search criteria dropdown...
-	wizard = dlg.find('.wizContainer:first');
-	wizard.width(width);
-	wizard.height(height);
-	form_height = searchForm.outerHeight();
-	results.height(height - form_height - 40); // Leave some space for the buttons
-
-    dlg.dialog('option', 'position', {my: 'center', at: 'center', of: window});
-}

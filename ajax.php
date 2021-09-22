@@ -42,8 +42,6 @@ try
 			 'selection_type' => 'single',));
 			$sHTML = "<form id=\"fr_precanned_select\" OnSubmit=\"return PrecannedDoSelect('$sLogAttCode');\">\n";
 		}
-		$sHTML .= "<input type=\"button\" class=\"ibo-button ibo-is-alternative ibo-is-neutral\" id=\"btn_cancel_precanned_select\" value=\"".Dict::S('UI:Button:Cancel')."\" onClick=\"$('#precanned_dlg').dialog('close');\">&nbsp;&nbsp;";
-		$sHTML .= "<input type=\"button\" class=\"ibo-button ibo-is-regular ibo-is-primary\" id=\"btn_ok_precanned_select\" value=\"".Dict::S('UI:Button:Ok')."\" onClick=\"PrecannedDoSelect('$sLogAttCode');\">";
 		$sHTML .= "<input type=\"hidden\" id=\"count_precanned_select\" value=\"0\">";
 		$sHTML .= "</form>\n";
 		$sHTML .= '</div></div>';
