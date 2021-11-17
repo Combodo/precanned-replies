@@ -27,7 +27,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Menu:PrecannedReplies+' => 'Vorgefertigte Antworten',
 
 	'UI:Button-AddReply' => 'Vorgefertigte Antworten...',
-	'UI:Button-AddReply:Short' => 'Templates~~',
+	'UI:Button-AddReply:Short' => 'Vorlagen',
 	'UI:Dlg-PickAReply' => 'Wählen Sie eine Antwort',
 	
 	'Class:PrecannedReply' => 'Vorgefertigte Antwort',
