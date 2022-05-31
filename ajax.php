@@ -1,7 +1,9 @@
 <?php
 require_once('../../approot.inc.php');
 require_once(APPROOT.'/application/application.inc.php');
-require_once(APPROOT.'/application/ajaxwebpage.class.inc.php');
+if (version_compare(ITOP_DESIGN_LATEST_VERSION , '3.0') < 0) {
+	require_once(APPROOT.'/application/ajaxwebpage.class.inc.php');
+}
 require_once(APPROOT.'/application/wizardhelper.class.inc.php');
 require_once(APPROOT.'/application/ui.linkswidget.class.inc.php');
 require_once(APPROOT.'/application/ui.extkeywidget.class.inc.php');
