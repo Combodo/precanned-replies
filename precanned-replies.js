@@ -120,9 +120,14 @@ function PrecannedDoSelect(sLogAttCode)
 				else{
 					var sInstanceCode =  $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] textarea').attr('id');
 				}
-				
-				CKEDITOR.instances[sInstanceCode].insertHtml(sText);
-				
+
+				if(CombodoCKEditorHandler !== undefined) {
+					CombodoCKEditorHandler.InsertHtmlInsideInstance('#' +sInstanceCode, sText);
+				}
+				else {
+					CKEDITOR.instances[sInstanceCode].insertHtml(sText);
+				}
+
 				var aFiles = aJson[0].files;
 				var index = 0;
 				while(index < aFiles.length)
