@@ -2,26 +2,26 @@
 /**
  * Localized data
  *
- * @author      Vladimir Kunin <v.b.kunin@gmail.com>
- * @link        http://community.itop-itsm.ru  iTop Russian Community
- * @link        https://github.com/itop-itsm-ru/itop-rus
- * @license     http://www.opensource.org/licenses/gpl-3.0.html LGPL
+ * @copyright Copyright (C) 2010-2024 Combodo SAS
+ * @license    https://opensource.org/licenses/AGPL-3.0
+ * 
  */
-Dict::Add('RU RU', 'Russian', 'Русский', array(
+/**
+ * @author Vladimir Kunin <v.b.kunin@gmail.com>
+ *
+ */
+Dict::Add('RU RU', 'Russian', 'Русский', [
+	'Class:PrecannedReply' => 'Готовый ответ',
+	'Class:PrecannedReply+' => 'Готовый ответ',
+	'Class:PrecannedReply/Attribute:body' => 'Текст',
+	'Class:PrecannedReply/Attribute:body+' => '',
+	'Class:PrecannedReply/Attribute:description' => 'Описание',
+	'Class:PrecannedReply/Attribute:description+' => '',
+	'Class:PrecannedReply/Attribute:name' => 'Название',
+	'Class:PrecannedReply/Attribute:name+' => '',
 	'Menu:PrecannedReplies' => 'Готовые ответы',
 	'Menu:PrecannedReplies+' => 'Готовые ответы',
-
 	'UI:Button-AddReply' => 'Готовые ответы...',
 	'UI:Button-AddReply:Short' => 'Templates~~',
 	'UI:Dlg-PickAReply' => 'Выберите ответ',
-	
-	'Class:PrecannedReply' => 'Готовый ответ',
-	'Class:PrecannedReply+' => 'Готовый ответ',
-	'Class:PrecannedReply/Attribute:name' => 'Название',
-	'Class:PrecannedReply/Attribute:name+' => '',
-	'Class:PrecannedReply/Attribute:description' => 'Описание',
-	'Class:PrecannedReply/Attribute:description+' => '',
-	'Class:PrecannedReply/Attribute:body' => 'Текст',
-	'Class:PrecannedReply/Attribute:body+' => '',
-));
-
+]);
