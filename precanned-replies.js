@@ -121,7 +121,7 @@ function PrecannedDoSelect(sLogAttCode)
 					var sInstanceCode =  $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] textarea').attr('id');
 				}
 
-				if(CombodoCKEditorHandler !== undefined) {
+				if (typeof CombodoCKEditorHandler !== 'undefined') {
 					CombodoCKEditorHandler.InsertHtmlInsideInstance('#' +sInstanceCode, sText);
 				}
 				else {
