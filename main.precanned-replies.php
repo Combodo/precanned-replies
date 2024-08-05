@@ -62,11 +62,18 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 		if (($bEditMode || !$bIsLegacy) && self::IsTargetObject($oObject) && !$oObject->IsNew())
 		{
 			$sAttCode = MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', 'public_log');
-			$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';
 			$bIsLegacy = static::UseLegacy();
 			$sIsLegacy = $bIsLegacy === true ? 'true' : 'false';
 			$oPage->add_ready_script("IsPrecannedRepliesLegacy = $sIsLegacy;");
-			$oPage->add_linked_script($sModuleUrl.'precanned-replies.js');
+
+			if (version_compare(ITOP_DESIGN_LATEST_VERSION , '3.2', '>=')) {
+				$oPage->LinkScriptFromModule('precanned-replies/precanned-replies.js');
+			}
+			else {
+				$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';
+				$oPage->add_linked_script($sModuleUrl.'precanned-replies.js');
+			}
+
 			$sButtonLabel = Dict::S('UI:Button-AddReply');
 			$oPage->add_dict_entry('UI:Dlg-PickAReply');
 			if($bIsLegacy){
