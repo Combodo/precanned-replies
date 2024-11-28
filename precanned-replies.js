@@ -8,15 +8,15 @@ function GetWizardHelperJsonPrecannedReply() {
 	}
 	return aReturn;
 }
-function SelectPrecannedReply(sLogAttCode)
+function SelectPrecannedReply(sObjectClass, iObjectKey, sLogAttCode)
 {
-	if ($('#precanned_button').prop('disabled')) return; // Disabled, do nothing
+	if ($('#precanned_button_'+sLogAttCode).prop('disabled')) return; // Disabled, do nothing
 	if ($('#precanned_dlg').length == 0)
 	{
 		$('body').append('<div id="precanned_dlg"></div>');
 	}
-	$('#precanned_button').prop('disabled', true);
-	$('#v_precanned').html('<img src="../images/indicator.gif" />');
+	$('#precanned_button_'+sLogAttCode).prop('disabled', true);
+	$('#v_precanned_'+sLogAttCode).html('<img src="../images/indicator.gif" />');
 
 	var $aJsonData = {'json' : GetWizardHelperJsonPrecannedReply()};
 	if(Object.keys($aJsonData['json']).length === 0) {
@@ -27,8 +27,10 @@ function SelectPrecannedReply(sLogAttCode)
 	}
 	
 	var theMap = $.extend($aJsonData, {
-		   operation: 'select_precanned',
-		   log_attcode: sLogAttCode
+		operation: 'select_precanned',
+		obj_class: sObjectClass,
+		obj_id: iObjectKey,
+		log_attcode: sLogAttCode,
 	 });
 	
 	// Run the query and get the result back directly in HTML
@@ -66,9 +68,6 @@ function SelectPrecannedReply(sLogAttCode)
 			//data_area.css('max-height', (0.5*$(document).height())+'px'); // Stay within the document's boundaries
 			//data_area.css('overflow', 'auto'); // Stay within the document's boundaries
 			dlg.dialog('open');
-			if(IsPrecannedRepliesLegacy){
-				PrecannedDoSearch(sLogAttCode);				
-			}
 		},
 		'html'
 	);
@@ -76,17 +75,14 @@ function SelectPrecannedReply(sLogAttCode)
 
 function OnClosePrecannedReply(sLogAttCode)
 {
-	$('#precanned_button').prop('disabled', false);
-	$('#v_precanned').html('');
+	$('#precanned_button_'+sLogAttCode).prop('disabled', false);
+	$('#v_precanned_'+sLogAttCode).html('');
 }
 
 function PrecannedDoSelect(sLogAttCode)
 {
 	var selected = $('#datatable_search_form_result_precanned_select input:checked');
-	if(IsPrecannedRepliesLegacy){
-		selected = $('#datatable_search_form_result_precanned_select .listResults input:checked');
-	}
-	
+
 	if (selected.length > 0)
 	{
 		var aSelected = new Array();
@@ -113,13 +109,7 @@ function PrecannedDoSelect(sLogAttCode)
 			{
 				var sText = aJson[0].text;
 				var iPrecannedId = aJson[0].id;
-				
-				if(IsPrecannedRepliesLegacy){
-					var sInstanceCode = $('#2_'+sLogAttCode).attr('id');
-				}
-				else{
-					var sInstanceCode =  $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] textarea').attr('id');
-				}
+				var sInstanceCode =  $('[data-role="ibo-caselog-entry-form"][data-attribute-code="'+sLogAttCode+'"] textarea').attr('id');
 
 				if (typeof CombodoCKEditorHandler !== 'undefined') {
 					CombodoCKEditorHandler.InsertHtmlInsideInstance('#' +sInstanceCode, sText);

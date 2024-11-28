@@ -26,6 +26,7 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
+			'itop-structure/3.2.0',
 			'itop-attachments/1.0.0',
 			'email-reply/1.0.0',
 		),
@@ -54,11 +55,12 @@ SetupWebPage::AddModule(
 		'doc.more_information' => '', // hyperlink to more information, if any
 
 		// Default settings
-		//
+		// Module specific settings go here, if any
 		'settings' => array(
-			// Module specific settings go here, if any
-			'target_class' => 'UserRequest',
-			'target_caselog' => 'public_log',
+			'classes' => array(
+				'UserRequest' => ['public_log'],
+				'Ticket' => ['private_log'],
+			),
 		),
 	)
 );

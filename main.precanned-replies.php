@@ -41,7 +41,7 @@
 
 class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObjectExtension
 {
-	const XML_LEGACY_VERSION = '1.7';
+	const XML_LEGACY_VERSION = '';
 
 	/**
 	 * Compare static::XML_LEGACY_VERSION with ITOP_DESIGN_LATEST_VERSION and returns true if the later is <= to the former.
@@ -52,43 +52,33 @@ class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObj
 	 * @since 1.2.0
 	 */
 	public static function UseLegacy(){
-		return static::XML_LEGACY_VERSION !== '' ? version_compare(ITOP_DESIGN_LATEST_VERSION, static::XML_LEGACY_VERSION, '<=') : false;
+		return false;
 	}
 
 	public function OnDisplayProperties($oObject, WebPage $oPage, $bEditMode = false)
 	{
-		$bIsLegacy = static::UseLegacy();
 
-		if (($bEditMode || !$bIsLegacy) && self::IsTargetObject($oObject) && !$oObject->IsNew())
+		if (self::IsTargetObject($oObject) && !$oObject->IsNew())
 		{
-			$sAttCode = MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', 'public_log');
-			$bIsLegacy = static::UseLegacy();
-			$sIsLegacy = $bIsLegacy === true ? 'true' : 'false';
-			$oPage->add_ready_script("IsPrecannedRepliesLegacy = $sIsLegacy;");
 
-			if (version_compare(ITOP_DESIGN_LATEST_VERSION , '3.2', '>=')) {
-				$oPage->LinkScriptFromModule('precanned-replies/precanned-replies.js');
-			}
-			else {
-				$sModuleUrl = utils::GetAbsoluteUrlModulesRoot().'precanned-replies/';
-				$oPage->add_linked_script($sModuleUrl.'precanned-replies.js');
-			}
+            $oPage->LinkScriptFromModule('precanned-replies/precanned-replies.js');
+            $sButtonLabel = Dict::S('UI:Button-AddReply');
+            $oPage->add_dict_entry('UI:Dlg-PickAReply');
+            $sButtonLTooltip = $sButtonLabel;
+            $sButtonLabel = Dict::S('UI:Button-AddReply:Short');
 
-			$sButtonLabel = Dict::S('UI:Button-AddReply');
-			$oPage->add_dict_entry('UI:Dlg-PickAReply');
-			if($bIsLegacy){
-				$oPage->add_ready_script("$('#field_2_$sAttCode div.caselog_input_header').append('<div id=\"precanned_replies\" style=\"display:inline-block; margin-left:20px;\"><input type=\"button\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\"/><span id=\"v_precanned\"></span></div>');");
-			}
-			else{
-				$sButtonLTooltip = $sButtonLabel;
-				$sButtonLabel = Dict::S('UI:Button-AddReply:Short');
-				$oPage->add_ready_script(
-					<<<JS
-$('[data-role=\"ibo-caselog-entry-form\"][data-attribute-code=\"$sAttCode\"] [data-role=\"ibo-caselog-entry-form--action-buttons--extra-actions\"]').append('<div id=\"precanned_replies\" style=\"display:inline-block;\"><button type=\"button\" class=\"emry-button ibo-button ibo-is-regular ibo-is-neutral\" id=\"precanned_button\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sAttCode\')\" data-tooltip-content=\"$sButtonLTooltip\"><span class=\"ibo-button--icon fas fa-file-invoice\"></span><span class=\"ibo-button--label\">$sButtonLabel</span></button><span id=\"v_precanned\"></span></div>');
+            $sObjectClass = get_class($oObject);
+            $iObjectId = $oObject->GetKey();
+			// Iterate on the caselogs applicables to object class
+            $aAttCodes = self::GetLogAttCodes($oObject);
+            foreach($aAttCodes as $sAttCode) {
+                $oPage->add_ready_script(
+                    <<<JS
+$('[data-role=\"ibo-caselog-entry-form\"][data-attribute-code=\"$sAttCode\"] [data-role=\"ibo-caselog-entry-form--action-buttons--extra-actions\"]').append('<div id=\"precanned_replies_$sAttCode\" style=\"display:inline-block;\"><button type=\"button\" class=\"emry-button ibo-button ibo-is-regular ibo-is-neutral\" id=\"precanned_button_$sAttCode\" value=\"$sButtonLabel\" onClick=\"SelectPrecannedReply(\'$sObjectClass\', \'$iObjectId\', \'$sAttCode\')\" data-tooltip-content=\"$sButtonLTooltip\"><span class=\"ibo-button--icon fas fa-file-invoice\"></span><span class=\"ibo-button--label\">$sButtonLabel</span></button><span id=\"v_precanned_$sAttCode\"></span></div>');
 CombodoTooltip.InitTooltipFromMarkup($('#precanned_button'), true);
 JS
-				);
-			}
+                );
+            }
 		}
 	}
 
@@ -163,10 +153,50 @@ JS
 	//
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	protected function IsTargetObject($oObject)
+	protected function IsTargetObject(DBObject $oObject) : bool
 	{
-		$sAllowedClass = MetaModel::GetModuleSetting('precanned-replies', 'target_class', 'UserRequest');
-		return ($oObject instanceof $sAllowedClass);
+        return (count(self::GetLogAttCodes($oObject) ) > 0);
 	}
+
+    // Get an array of applicable caselog AttCodes for the class of the object
+    // Merge the caselogs of the object class and its parent classes
+    // Return an empty array if no caselog is applicable
+    public static function GetLogAttCodes(DBObject $oObject) : array
+    {
+
+        $aParams = []; // merge the caselogs of the object class and its parent classes
+        $aCaselogs = []; // return an array of applicable caselog AttCodes
+        $aConfig = self::GetConfig();
+        $sObjClass = get_class($oObject);
+        foreach($aConfig as $sClass => $sClassParam) {
+            if ($sObjClass === $sClass || array_key_exists($sObjClass, MetaModel::EnumChildClasses($sClass))) {
+                $aClassParam = explode(',', $sClassParam);
+                    // merge the arrays without duplicated values
+                $aParams = array_unique(array_merge($aParams, $aClassParam));
+            }
+        }
+        foreach($aParams as $i => $sAttCode) {
+            if (MetaModel::IsValidAttCode($sObjClass, $sAttCode) && (MetaModel::GetAttributeDef($sObjClass, $sAttCode) instanceof AttributeCaseLog)) {
+                $aCaselogs[] = $sAttCode;
+            }
+        }
+        return $aCaselogs;
+    }
+    // return an array of $sClassName => $sCaseLogs // comma separated AttCodes
+    public static function GetConfig() : array
+    {   // Get multi-classes param table
+        $aConfig = MetaModel::GetModuleSetting('precanned-replies', 'targets', array());
+
+        // Merge legacy params in multi-classes format
+        $sSingleClass = MetaModel::GetModuleSetting('precanned-replies', 'target_class', '');
+        if (($sSingleClass !== '') && (!array_key_exists($sSingleClass, $aConfig))) {
+            $aConfig[$sSingleClass]= array(MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', ''));
+        }
+        // No config available, set the default in the multi-classes format
+        if (empty($aConfig)) {
+            $aConfig['UserRequest'] = ['public_log'];
+        }
+        return $aConfig;
+    }
 }
 

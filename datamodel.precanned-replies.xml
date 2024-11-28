@@ -47,7 +47,23 @@
           <format>html</format>
         </field>
       </fields>
-      <methods/>
+      <methods>
+         <method id="FilterApplicableReplies" _delta="define">
+            <comment>/**
+                * Overwrite for special behavior
+                * Alter $oFilter based on current $oObject
+                */
+            </comment>
+            <static>true</static>
+            <access>public</access>
+            <code><![CDATA[
+public static function FilterApplicableReplies(DBObject $oObject, DBObjectSearch &$oFilter, string $sLogAttCode = '')
+{
+    return;
+}
+          ]]></code>
+        </method>
+      </methods>
       <presentation>
         <details>
           <items>
