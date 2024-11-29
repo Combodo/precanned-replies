@@ -169,9 +169,9 @@ JS
         $aConfig = self::GetConfig();
         $sObjClass = get_class($oObject);
         foreach($aConfig as $sClass => $sClassParam) {
-            if ($sObjClass === $sClass || array_key_exists($sObjClass, MetaModel::EnumChildClasses($sClass))) {
+            if (MetaModel::IsParentClass($sClass,$sObjClass)) {
                 $aClassParam = explode(',', $sClassParam);
-                    // merge the arrays without duplicated values
+                $aClassParam = array_map('trim', $aClassParam);
                 $aParams = array_unique(array_merge($aParams, $aClassParam));
             }
         }
@@ -190,11 +190,11 @@ JS
         // Merge legacy params in multi-classes format
         $sSingleClass = MetaModel::GetModuleSetting('precanned-replies', 'target_class', '');
         if (($sSingleClass !== '') && (!array_key_exists($sSingleClass, $aConfig))) {
-            $aConfig[$sSingleClass]= array(MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', ''));
+            $aConfig[$sSingleClass]= MetaModel::GetModuleSetting('precanned-replies', 'target_caselog', '');
         }
         // No config available, set the default in the multi-classes format
         if (empty($aConfig)) {
-            $aConfig['UserRequest'] = ['public_log'];
+            $aConfig['UserRequest'] = 'public_log';
         }
         return $aConfig;
     }
