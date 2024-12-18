@@ -41,6 +41,7 @@ try
                 $oObject = MetaModel::GetObject($sObjClass, $sObjId);
                 $sLogAttCode = (MetaModel::IsValidAttCode($sObjClass, $sAttCode) && (MetaModel::GetAttributeDef($sObjClass, $sAttCode) instanceof AttributeCaseLog)) ? $sAttCode : '';
                 PrecannedReply::FilterApplicableReplies($oObject, $oFilter, $sLogAttCode);
+
             }
             else {
                     // Non specific filter

@@ -129,7 +129,6 @@ class ConfigTest extends ItopDataTestCase
         ]);
         $oService = new PrecannedRepliesPlugIn();
         $oObject = MetaModel::NewObject('UserRequest');
-        var_export($oService->GetLogAttCodes($oObject));
         $this->assertEquals([ 'public_log','private_log' ], $oService->GetLogAttCodes($oObject),"Multiple log in precanned-replies configuration should be split and invalid should be filtered out");
     }
     public function testGetLogAttCodes_WrongCasseNotSupported()
@@ -141,7 +140,7 @@ class ConfigTest extends ItopDataTestCase
         ]);
         $oService = new PrecannedRepliesPlugIn();
         $oObject = MetaModel::NewObject('UserRequest');
-        var_export($oService->GetLogAttCodes($oObject));
+        // var_export($oService->GetLogAttCodes($oObject));
         $this->assertEquals([ 'private_log' ], $oService->GetLogAttCodes($oObject),"Multiple log in precanned-replies configuration should be split and invalid should be filtered out");
     }
 

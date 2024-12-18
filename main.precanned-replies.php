@@ -39,7 +39,7 @@
 // Declare a class that implements iApplicationUIExtension (to tune object display and edition form)
 // Declare a class that implements iApplicationObjectExtension (to tune object read/write rules)
 
-class PrecannedRepliesPlugIn implements iApplicationUIExtension, iApplicationObjectExtension
+class PrecannedRepliesPlugIn implements iApplicationUIExtension
 {
 	const XML_LEGACY_VERSION = '';
 
@@ -120,32 +120,6 @@ JS
 		return array();
     }
 
-	public function OnIsModified($oObject)
-	{
-		return false;
-	}
-
-	public function OnCheckToWrite($oObject)
-	{
-		return array();
-	}
-
-	public function OnCheckToDelete($oObject)
-	{
-		return array();
-	}
-
-	public function OnDBUpdate($oObject, $oChange = null)
-	{
-	}
-	
-	public function OnDBInsert($oObject, $oChange = null)
-	{
-	}
-	
-	public function OnDBDelete($oObject, $oChange = null)
-	{	
-	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
