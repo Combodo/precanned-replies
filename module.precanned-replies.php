@@ -1,5 +1,5 @@
 <?php
-// Copyright (C) 2010 - 2016 Combodo SARL
+// Copyright (C) 2010 - 2025 Combodo SARL
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'precanned-replies/1.3.0',
+	'precanned-replies/1.4.0',
 	array(
 		// Identification
 		//
@@ -26,7 +26,7 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-structure/3.1.0',
+			'itop-structure/3.2.0',
 			'itop-attachments/1.0.0',
 			'email-reply/1.0.0',
 		),
