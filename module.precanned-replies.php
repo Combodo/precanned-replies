@@ -57,9 +57,9 @@ SetupWebPage::AddModule(
 		// Default settings
 		// Module specific settings go here, if any
 		'settings' => array(
-			'classes' => array(
-				'UserRequest' => ['public_log'],
-				'Ticket' => ['private_log'],
+			'targets' => array(
+				'UserRequest' => 'public_log',
+				'Ticket' => 'private_log',
 			),
 		),
 	)
