@@ -1,4 +1,5 @@
 <?php
+
 // Copyright (C) 2010 - 2025 Combodo SARL
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,7 +18,7 @@
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
 	'precanned-replies/1.4.0',
-	array(
+	[
 		// Identification
 		//
 		'label' => 'Helpdesk Precanned Replies',
@@ -25,29 +26,29 @@ SetupWebPage::AddModule(
 
 		// Setup
 		//
-		'dependencies' => array(
+		'dependencies' => [
 			'itop-structure/3.2.0',
 			'itop-attachments/1.0.0',
 			'email-reply/1.0.0',
-		),
+		],
 		'mandatory' => false,
 		'visible' => true,
 
 		// Components
 		//
-		'datamodel' => array(
+		'datamodel' => [
 			'model.precanned-replies.php',
-			'main.precanned-replies.php'
-		),
-		'webservice' => array(
+			'main.precanned-replies.php',
+		],
+		'webservice' => [
 
-		),
-		'data.struct' => array(
+		],
+		'data.struct' => [
 			// add your 'structure' definition XML files here,
-		),
-		'data.sample' => array(
+		],
+		'data.sample' => [
 			// add your sample data XML files here,
-		),
+		],
 
 		// Documentation
 		//
@@ -56,14 +57,12 @@ SetupWebPage::AddModule(
 
 		// Default settings
 		// Module specific settings go here, if any
-		'settings' => array(
-			'targets' => array(
+		'settings' => [
+			'targets' => [
 				'UserRequest' => 'public_log',
+				'Incident' => 'public_log',
 				'Ticket' => 'private_log',
-			),
-		),
-	)
+			],
+		],
+	]
 );
-
-
-?>
